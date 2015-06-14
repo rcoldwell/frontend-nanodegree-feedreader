@@ -23,7 +23,7 @@ $(function () {
          */
         it('are defined', function () {
             expect(allFeeds).toBeDefined();
-            expect(allFeeds.length).not.toBe(0);
+            expect(allFeeds.length).not.toBe(0); //check length of allFeeds array
         });
 
         /* TODO: Write a test that loops through each feed
@@ -32,8 +32,8 @@ $(function () {
          */
         it('all have urls', function () {
             for (x = 0; x < allFeeds.length; x++) {
-                expect(allFeeds[x].url).toBeDefined();
-                expect(allFeeds[x].url.length).not.toBe(0);
+                expect(allFeeds[x].url).toBeDefined(); //check each feed url value
+                expect(allFeeds[x].url.length).not.toBe(0); //check each feed url length to be sure it is not an empty value
             }
         });
 
@@ -43,8 +43,8 @@ $(function () {
          */
         it('all have names', function () {
             for (x = 0; x < allFeeds.length; x++) {
-                expect(allFeeds[x].name).toBeDefined();
-                expect(allFeeds[x].name.length).not.toBe(0);
+                expect(allFeeds[x].name).toBeDefined(); //check each feed name value
+                expect(allFeeds[x].name.length).not.toBe(0);//check each feed name length to be sure it is not an empty value
             }
         });
 
@@ -64,7 +64,7 @@ $(function () {
 
         it('is hidden by default', function () {
             //body has class menu-hidden by default, showing menu removes class from body
-            expect(body.hasClass('menu-hidden')).toBeTruthy();
+            expect(body.hasClass('menu-hidden')).toBeTruthy(); //check that body has a class called .menu-hidden
         });
 
         /* TODO: Write a test that ensures the menu changes
@@ -73,13 +73,13 @@ $(function () {
          * clicked and does it hide when clicked again.
          */
         it('shows when clicked', function () {
-            menu.trigger('click');
-            expect(body.hasClass('menu-hidden')).toBeFalsy();
+            menu.trigger('click'); //trigger a click on the menu button to show the menu
+            expect(body.hasClass('menu-hidden')).toBeFalsy(); //check that the .menu-hidden class was removed
         });
 
         it('hides when clicked again', function () {
-            menu.trigger('click');
-            expect(body.hasClass('menu-hidden')).toBeTruthy();
+            menu.trigger('click'); //trigger a click on the menu button to hide the menu
+            expect(body.hasClass('menu-hidden')).toBeTruthy(); //check that the .menu-hidden class was added again
         });
 
     });
@@ -93,12 +93,12 @@ $(function () {
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
         beforeEach(function (done) {
-            loadFeed(0, done);
+            loadFeed(0, done); //run the loadFeed function to load feeds
         });
 
         it('have been retrieved', function () {
-            var articles = $('article.entry');
-            expect(articles.length).toBeGreaterThan(0);
+            var articles = $('article.entry'); //article elements with .entry class represent each story
+            expect(articles.length).toBeGreaterThan(0); // check that there is at least 1 or more stories
         });
     });
 
@@ -109,19 +109,19 @@ $(function () {
          * Remember, loadFeed() is asynchronous.
          */
         beforeEach(function (done) {
-            $(".feed").empty(); // Clear the feed
-            loadFeed(1, function () {
-                title = $('.feed').find('h2').text();
-                loadFeed(2, done);
+            $(".feed").empty(); // clear the feed child elements
+            loadFeed(1, function () { //run the loadFeed function with a feed source
+                title = $('.feed').find('h2').text(); //store the title of the first story
+                loadFeed(2, done); //run the loadFeed function with a different feed source
             });
         })
 
         it('will load successfully when another feed is selected', function () {
-            expect($('.feed').find('h2').text()).not.toBe(title);
+            expect($('.feed').find('h2').text()).not.toBe(title); //compare current story title with previous stored title to make sure they are not the same
         });
 
         afterAll(function (done) {
-            loadFeed(0, done);
+            loadFeed(0, done); //restore the default state by running the loadFeed function again with the default feed
         });
 
     });
